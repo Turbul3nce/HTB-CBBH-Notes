@@ -1,0 +1,82 @@
+# HTB BUG BOUNTY COURSE #
+
+# Shortcuts
+crtl+shift+e # devtools>network
+shift+f9 # devtools>storage
+
+# HTTP Headers
+curl -v # Shows full details of the http request and response.
+curl -I # Only display the response headers
+curl -i # Display both the headers and response body
+curl -H # Set request headers
+curl -A # Set our own user agent
+curl -u # provide authentication credentials (e.g. -u admin:admin http://ex or just http://admin:admin/webpage) 
+curl -H 'Authorization: Basic YWRtaW46YWRtaW4=' http://<SERVER_IP>:<PORT>/ # Authenticating by setting our own header, using base64 of admin:admin
+curl -X # Send a post request
+curl -L # Follow the redirect
+curl -b # Set the cookie. Once authenticated to a site we dont have to authen every time. Use the cookies. Or we can use: curl -H 'Cookie: PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1' http://<SERVER_IP>:<PORT>/
+
+# HTTP Methods
+#### Most modern web applications mainly rely on the GET and POST methods. However, any web application that utilizes REST APIs also rely on PUT and DELETE, which are used to update and delete data on the API endpoint, respectively. 
+#### Having a valid cookie may be enough to get authenticated into many web applications. This can be an essential part of some web attacks, like Cross-Site Scripting.
+
+# JSON DATA
+curl -X POST -d '{"search":"london"}' -b 'PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1' -H 'Content-Type: application/json' http://<SERVER_IP>:<PORT>/search.php["London (UK)"] 
+# Replicating POST request using JSON
+
+# APIs
+#### There are several types of APIs. Many APIs are used to interact with a database, such that we would be able to specify the requested table and the requested row within our API query, and then use an HTTP method to perform the operation needed. 
+# Example of API request
+curl -X PUT http://<SERVER_IP>:<PORT>/api.php/city/london ...SNIP...
+
+# CRUD
+## Create POST
+## Read GET
+## Update PUT
+## Delete DELETE
+# Commonly linked to commonly known CRUD APIs, but the same principles apply with REST APIs.
+
+# Interacting with APIs 
+
+## Reading
+curl http://<SERVER_IP>:<PORT>/api.php/city/london
+
+[{"city_name":"London","country_name":"(UK)"}]
+
+curl -s http://<SERVER_IP>:<PORT>/api.php/city/london | jq # Piped to jq for proper format -s to silent uneeded curl output.
+
+[
+  {
+    "city_name": "London",
+    "country_name": "(UK)"
+  }
+]
+
+## Creating
+curl -X POST http://<SERVER_IP>:<PORT>/api.php/city/ -d '{"city_name":"HTB_City", "country_name":"HTB"}' -H 'Content-Type: application/json'
+ 
+# Check to see if it was added:
+curl -s http://<SERVER_IP>:<PORT>/api.php/city/HTB_City | jq
+
+[
+  {
+    "city_name": "HTB_City",
+    "country_name": "HTB"
+  }
+]
+
+## Updating
+# Note: The HTTP PATCH method may also be used to update API entries instead of PUT. To be precise, PATCH is used to partially update an entry (only modify some of its data "e.g. only city_name"), while PUT is used to update the entire entry. We may also use the HTTP OPTIONS method to see which of the two is accepted by the server, and then use the appropriate method accordingly. In this section, we will be focusing on the PUT method, though their usage is quite similar.
+curl -X PUT http://<SERVER_IP>:<PORT>/api.php/city/london -d '{"city_name":"New_HTB_City", "country_name":"HTB"}' -H 'Content-Type: application/json'
+curl -s http://<SERVER_IP>:<PORT>/api.php/city/New_HTB_City | jq
+
+[
+  {
+    "city_name": "New_HTB_City",
+    "country_name": "HTB"
+  }
+]
+
+## Deleting
+curl -X DELETE http://<SERVER_IP>:<PORT>/api.php/city/New_HTB_City
+curl -s http://<SERVER_IP>:<PORT>/api.php/city/New_HTB_City | jq # Nothing there now
