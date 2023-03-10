@@ -80,3 +80,135 @@ curl -s http://<SERVER_IP>:<PORT>/api.php/city/New_HTB_City | jq
 ## Deleting
 curl -X DELETE http://<SERVER_IP>:<PORT>/api.php/city/New_HTB_City
 curl -s http://<SERVER_IP>:<PORT>/api.php/city/New_HTB_City | jq # Nothing there now
+
+# WEB APPLICATIONS
+
+## Web Applications vs Websites
+WEB 1.0. - In the past, we interacted with websites that are static and cannot be changed in real-time. This means that traditional websites were statically created to represent specific information, and this information would not change with our interaction. To change the website's content, the corresponding page has to be edited by the developers manually. These types of static pages do not contain functions and, therefore, do not produce real-time changes.
+WEB 2.0. - Presenting dynamic content based on user interaction. Another significant difference is that web applications are fully functional and can perform various functionalities for the end-user, while web sites lack this type of functionality.
+
+### Websites
+* Static Pages
+* Same for Everyone
+### Web Applications
+* Dynamic Pages
+* Interactive
+* Different View for each user.
+* Functional
+* Being modular
+* Running on any display size
+* Running on any platform without being optimized
+
+## WEB APP Distros
+
+### OpenSource
+* WordPress
+* OpenCart
+* Joomla
+
+### Proprietary(closed source)
+* Wix
+* Shopify
+* DotNetNuke
+
+# Enter OWASP Security Testing Guide:
+https://github.com/OWASP/wstg/tree/master/document/4-Web_Application_Security_Testing
+ 
+# REAL WORLD WEB APP PENTESTING
+Flaw		Real-world Scenario
+SQL injection	Obtaining Active Directory usernames and performing a password spraying attack against a VPN or email portal.
+File Inclusion	Reading source code to find a hidden page or directory which exposes additional functionality that can be used to gain remote code execution.
+Unrestricted File Upload	A web application that allows a user to upload a profile picture that allows any file type to be uploaded (not just images). This can be leveraged to gain full control of the web application server by uploading malicious code.
+Insecure Direct Object Referencing (IDOR)	When combined with a flaw such as broken access control, this can often be used to access another user's files or functionality. An example would be editing your user profile browsing to a page such as /user/701/edit-profile. If we can change the 701 to 702, we may edit another user's profile!
+Broken Access Control	Another example is an application that allows a user to register a new account. If the account registration functionality is designed poorly, a user may perform privilege escalation when registering. Consider the POST request when registering a new user, which submits the data username=bjones&password=Welcome1&email=bjones@inlanefreight.local&roleid=3. What if we can manipulate the roleid parameter and change it to 0 or 1. We have seen real-world applications where this was the case, and it was possible to quickly register an admin user and access many unintended features of the web application.
+
+# WEB APPLICATION INFRASTRUCTURE(MODELS)
+
+* Client-Server
+* One Server
+* Many Servers - One Database
+* Many Servers - Many Databases
+
+# WEB APPLICATION COMPONENTS
+
+* Client
+* Server
+	- Webserver
+	- Web Application Logic
+	- Database
+* Services ( Microservices )
+	- 3rd party integrations
+	- Web Application Integrations
+* Functions (Serverless)
+
+# WEB APPLICATION ARCHITECTURE (THREE TIER ARCHITECTURE)
+
+* Presentation Layer - UI process components.
+* Application Layer - ensures web requests are properly processed.
+* Data Layer - The data layer works closely with the application layer to determine exactly where the required data is stored and can be accessed.
+
+# Microservices
+
+### We can think of microservices as independent components of the web application, which in most cases are programmed for one task only.
+Examples:
+* Registration
+* Search
+* Payments
+* Ratings
+* Reviews
+### These components communicate with the client and with each other. The communication between these microservices is stateless, which means that the request and response are independent. This is because the stored data is stored separately from the respective microservices. The use of microservices is considered service-oriented architecture (SOA), built as a collection of different automated functions focused on a single business goal. Nevertheless, these microservices depend on each other.
+###Another essential and efficient microservice component is that they can be written in different programming languages and still interact. Microservices benefit from easier scaling and faster development of applications, which encourages innovation and speeds upmarket delivery of new features. Some benefits of microservices include:
+Examples:
+* Agility 
+* Flexible Scaling
+* Easy Delpoyment
+* Reusable Code
+* Resiliance
+# AWS Whitepaper(Great resource for microservices): https://d1.awsstatic.com/whitepapers/microservices-on-aws.pdf
+
+# FRONT END vs BACK END 
+
+### Full Stack web development refers to both front end and back end.
+
+## Front End
+
+* HTML
+* CSS
+* Javascript
+-
+* Visual Concept Web Design
+* User Interface (UI) design
+* User Experience (UX) design
+
+## Back End
+### The back end of a web application drives all of the core web application functionalities, all of which is executed at the back end server, which processes everything required for the web application to run correctly. It is the part we may never see or directly interact with, but a website is just a collection of static web pages without a back end.
+
+### Back End Components
+
+* Back End Servers - The hardware and operating system that hosts all other components and are usually run on operating systems like Linux, Windows, or using Containers.
+* Web Servers - Web servers handle HTTP requests and connections. Some examples are Apache, NGINX, and IIS.
+* Databases - Databases (DBs) store and retrieve the web application data. Some examples of relational databases are MySQL, MSSQL, Oracle, PostgreSQL, while examples of non-relational databases include NoSQL and MongoDB.
+* Development Frameworks - Development Frameworks are used to develop the core Web Application. Some well-known frameworks include PHP, C#, Java, Python, and NodeJS JavaScript.
+
+Some of the main jobs performed by back end components include:
+
+    Develop the main logic and services of the back end of the web application
+    Develop the main code and functionalities of the web application
+    Develop and maintain the back end database
+    Develop and implement libraries to be used by the web application
+    Implement technical/business needs for the web application
+    Implement the main APIs for front end component communications
+    Integrate remote servers and cloud services into the web application
+
+### While HTML and CSS are mainly in charge of how a web page looks, JavaScript is usually used to control any functionality that the front end web page requires. Without JavaScript, a web page would be mostly static and would not have much functionality or interactive elements.
+Some of the most common front end JavaScript frameworks are:
+
+    Angular
+    React
+    Vue
+    jQuery
+
+# FRONT END VULNERABILITIES
+
+## Sensitive Data Exposure
+
