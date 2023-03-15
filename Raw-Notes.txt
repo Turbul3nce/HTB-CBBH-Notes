@@ -415,3 +415,22 @@ Note: To enable the use of APIs within a web application, the developers have to
     PUT request to change existing data
     DELETE request to remove data
 
+# Common Vulnerabilites from OWASP Top 10
+
+# Broken Access/Authentication Control
+- Most common and dangerous of vulnerabilties 
+- Bypass auth functions
+- Access features and pages they should not be allowed to access
+
+# Malicious File Uploads
+- upload files that could allow command execution on the web server
+
+# Command Injection
+- Many Web Apps execute local OS commands to perform certain tasks
+- Any place that excepts user input can be tested for command injection
+
+# SQL injection
+- Falls under command injection
+- Test user input using special characters and SQL queries
+
+# Public Vulnerabilities
