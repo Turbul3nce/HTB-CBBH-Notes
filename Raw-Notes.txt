@@ -308,3 +308,56 @@ Microsoft 	Office365 	Skype 	Stack Overflow 	Dell
 
 ### Aside from these 3 web servers, there are many other commonly used web servers, like Apache Tomcat for Java web applications, and Node.JS for web applications developed using JavaScript on the back end.
 
+# Databases
+
+## Relation(SQL)
+
+- Store their data in tables, rows, and columns.
+- Each table can have unique keys, which can link tables together and create relationships between tables.
+- The relationship between tables within a database is called a Schema.
+- For example, we can retrieve all details linked to a certain user from all tables with a single query. This makes relational databases very fast and reliable for big datasets that have a clear structure and design.
+Common Types:
+MySQL - Most commonly used database around the internet
+MSSQL - Windows implementation
+Oracle - Fast, but costly, even for big business.
+PostgreSQL - Free and open-source. Designed to be easily extensible.
+### Other common SQL databases include: SQLite, MariaDB, Amazon Aurora, and Azure SQL.
+
+## Non-Relational(NoSQL)
+
+- Doesn't use tables, rows, columns, primary keys, relationships, or schemas.
+- Stores data using various storage models, depending on the type of data stored.
+- Very scalable and flexible.
+Common Storage Models:
+-- Key-Value
+-- Document-Based
+-- Wide-Column
+-- Graph
+### Each of the above models has a different way of storing data. For example, the Key-Value model usually stores data in JSON or XML, and has a key for each pair, storing all of its data as its value:
+Common NoSQL Databases:
+MongoDB = Most common NoSQL database. Free and open source. Document-Based. Stores data in JSON objects.
+ElasticSearch = Free and open source. Used for storing an analyzing huge datasets. fast searching 
+Apache Cassandra = Free and open source. Very scalable and is optimized gracefully handling faulty values.
+
+# Use in Web Applications
+
+## For example, within a PHP web application, once MySQL is up and running, we can connect to the database server with:
+$conn = new mysqli("localhost", "user", "pass");
+## Create a new database with:
+$sql = "CREATE DATABASE database1";
+$conn->query($sql)
+## After that, we can connect to our new database, and start using the MySQL database through MySQL syntax, right within PHP, as follows:
+$conn = new mysqli("localhost", "user", "pass", "database1");
+$query = "select * from table_1";
+$result = $conn->query($query);
+## Web applications usually use user-input when retrieving data. For example, when a user uses the search function to search for other users, their search input is passed to the web application, which uses the input to search within the database(s).
+$searchInput =  $_POST['findUser'];
+$query = "select * from users where name like '%$searchInput%'";
+$result = $conn->query($query);
+## Finally, the web application sends the result back to the user:
+while($row = $result->fetch_assoc() ){
+	echo $row["name"]."<br>";
+}
+
+
+# Development Frameworks and APIs
