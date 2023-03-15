@@ -434,3 +434,32 @@ Note: To enable the use of APIs within a web application, the developers have to
 - Test user input using special characters and SQL queries
 
 # Public Vulnerabilities
+
+- CVEs or Common Vulnerabilites and Exposures
+-- Assigned a score
+- CVSS or Common Vulnerability Scoring System 
+-- Industry standard for assessing the severity of security vulnerabilties 
+
+# CVSS v2 and CVSS v3
+
+National Vulnerability Database (NVD)
+
+CVSS V2.0 Ratings 	
+Severity 	Base Score Range
+Low 	0.0-3.9
+Medium 	4.0-6.9
+High 	7.0-10.0
+
+CVSS V3.0 Ratings 	
+Severity 	Base Score Range
+None 	0.0
+Low 	0.1-3.9
+Medium 	4.0-6.9
+High 	7.0-8.9
+Critical 	9.0-10.0
+
+Note: The NVD does not factor in Temporal and Environmental metrics because the former can change over time due to external events.
+However, The NVD provides a CVSS v2 calculator and a CVSS v3 calculator that organizations can use to factor additional risk from Temporal and Environmental data unique to them.
+Guide: https://www.first.org/cvss/user-guide
+
+# Intro to Web Proxies
