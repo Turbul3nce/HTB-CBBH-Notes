@@ -463,3 +463,37 @@ However, The NVD provides a CVSS v2 calculator and a CVSS v3 calculator that org
 Guide: https://www.first.org/cvss/user-guide
 
 # Intro to Web Proxies
+
+# Encoding/Decoding
+## It is essential to ensure that our request data is URL-encoded and our request headers are correctly set. Otherwise, we may get a server error in the response. This is why encoding and decoding data becomes essential as we modify and repeat web requests. Some of the key characters we need to encode are:
+
+    Spaces: May indicate the end of request data if not encoded
+    &: Otherwise interpreted as a parameter delimiter
+    #: Otherwise interpreted as a fragment identifier
+
+## To URL-encode text in Burp Repeater, we can select that text and right-click on it, then select (Convert Selection>URL>URL encode key characters), or by selecting the text and clicking [CTRL+U]. Burp also supports URL-encoding as we type if we right-click and enable that option, which will encode all of our text as we type it.
+
+# Decoding
+
+* Types of encoders supported by both Burpsuite and ZAP:
+
+    HTML
+    Unicode
+    Base64
+    ASCII hex
+
+* In recent versions of Burp, we can also use the Burp Inspector tool to perform encoding and decoding (among other things), which can be found in various places like Burp Proxy or Burp Repeater:
+
+# Encoding
+## As we can see, the text holds the value {"username":"guest", "is_admin":false}. So, if we were performing a penetration test on a web application and find that the cookie holds this value, we may want to test modifying it to see whether it changes our user privileges. So, we can copy the above value, change guest to admin and false to true, and try to encode it again using its original encoding method (base64):
+
+# Proxying Tools
+
+! Useful Tip: In proxychains.cnf, we should also enable Quiet Mode to reduce noise by un-commenting quiet_mode.
+
+# Burp intruder
+
+## Both Burp and ZAP provide additional features other than the default web proxy, which are essential for web application penetration testing. Two of the most important extra features are web fuzzers and web scanners. The built-in web fuzzers are powerful tools that act as web fuzzing, enumeration, and brute-forcing tools. This may also act as an alternative for many of the CLI-based fuzzers we use, like ffuf, dirbuster, gobuster, wfuzz, among others.
+
+
+
