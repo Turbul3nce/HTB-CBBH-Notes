@@ -495,5 +495,31 @@ Guide: https://www.first.org/cvss/user-guide
 
 ## Both Burp and ZAP provide additional features other than the default web proxy, which are essential for web application penetration testing. Two of the most important extra features are web fuzzers and web scanners. The built-in web fuzzers are powerful tools that act as web fuzzing, enumeration, and brute-forcing tools. This may also act as an alternative for many of the CLI-based fuzzers we use, like ffuf, dirbuster, gobuster, wfuzz, among others.
 
+# Burp Scanner
+## An essential feature of web proxy tools is their web scanners. Burp Suite comes with Burp Scanner, a powerful scanner for various types of web vulnerabilities, using a Crawler for building the website structure, and Scanner for passive and active scanning.
+
+# Passive Scanner and Active Scanner
+
+# Passive Scanning
+## Unlike an Active Scan, a Passive Scan does not send any new requests but analyzes the source of pages already visited in the target/scope and then tries to identify potential vulnerabilities. This is very useful for a quick analysis of a specific target, like missing HTML tags or potential DOM-based XSS vulnerabilities. However, without sending any requests to test and verify these vulnerabilities, a Passive Scan can only suggest a list of potential vulnerabilities. Still, Burp Passive Scanner does provide a level of Confidence for each identified vulnerability, which is also helpful for prioritizing potential vulnerabilities.
+
+# Active Scanning
+## We finally reach the most powerful part of Burp Scanner, which is its Active Vulnerability Scanner. An active scan runs a more comprehensive scan than a Passive Scan, as follows:
+
+    It starts by running a Crawl and a web fuzzer (like dirbuster/ffuf) to identify all possible pages
+
+    It runs a Passive Scan on all identified pages
+
+    It checks each of the identified vulnerabilities from the Passive Scan and sends requests to verify them
+
+    It performs a JavaScript analysis to identify further potential vulnerabilities
+
+    It fuzzes various identified insertion points and parameters to look for common vulnerabilities like XSS, Command Injection, SQL Injection, and other common web vulnerabilities
+
+# Burp's Reporting
+## once all of our scans are completed, and all potential issues have been identified, we can go to (Target>Site map), right-click on our target, and select (Issue>Report issues for this host). We will get prompted to select the export type for the report and what information we would like to include in the report. Once we export the report, we can open it in any web browser to view its details
+
+
+
 
 
