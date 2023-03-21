@@ -541,6 +541,33 @@ Virtual Hosts - Lastly, we want to enumerate virtual hosts (vhosts), which are s
 ## The Internet Corporation of Assigned Names and Numbers (ICANN) requires that accredited registrars enter the holder's contact information, the domain's creation, and expiration dates, and other information in the Whois database immediately after registering a domain. In simple terms, the Whois database is a searchable list of all domains currently registered worldwide.
 
 
+# DNS
+
+## The DNS is the Internet's phone book. Domain names such as hackthebox.com and inlanefreight.com allow people to access content on the Internet. Internet Protocol (IP) addresses are used to communicate between web browsers. DNS converts domain names to IP addresses, allowing browsers to access resources on the Internet.
+
+## Each Internet-connected device has a unique IP address that other machines use to locate it. DNS servers minimize the need for people to learn IP addresses like 104.17.42.72 in IPv4 or more sophisticated modern alphanumeric IP addresses like 2606:4700::6811:2b48 in IPv6. When a user types www.facebook.com into their web browser, a translation must occur between what the user types and the IP address required to reach the www.facebook.com webpage.
+
+A manager for each nation organizes country code domains. These managers provide a public service on behalf of the Internet community. Resource Records are the results of DNS queries and have the following structure:
+	
+Resource Record 	A domain name, usually a fully qualified domain name, is the first part of a Resource Record. If you don't use a fully qualified domain name, the zone's name where the record is located will be appended to the end of the name.
+TTL 	In seconds, the Time-To-Live (TTL) defaults to the minimum value specified in the SOA record.
+Record Class 	Internet, Hesiod, or Chaos
+Start Of Authority (SOA) 	It should be first in a zone file because it indicates the start of a zone. Each zone can only have one SOA record, and additionally, it contains the zone's values, such as a serial number and multiple expiration timeouts.
+Name Servers (NS) 	The distributed database is bound together by NS Records. They are in charge of a zone's authoritative name server and the authority for a child zone to a name server.
+IPv4 Addresses (A) 	The A record is only a mapping between a hostname and an IP address. 'Forward' zones are those with A records.
+Pointer (PTR) 	The PTR record is a mapping between an IP address and a hostname. 'Reverse' zones are those that have PTR records.
+Canonical Name (CNAME) 	An alias hostname is mapped to an A record hostname using the CNAME record.
+Mail Exchange (MX) 	The MX record identifies a host that will accept emails for a specific host. A priority value has been assigned to the specified host. Multiple MX records can exist on the same host, and a prioritized list is made consisting of the records for a specific host.
+
+
+# NSLookup $ Dig
+
+## With Nslookup, we can search for domain name servers on the Internet and ask them for information about hosts and domains.
+
+## We can also specify a nameserver if needed by adding @<nameserver/IP> to the command. Unlike nslookup, DIG shows us some more information that can be of importance.
+
+
+
 
 
 
