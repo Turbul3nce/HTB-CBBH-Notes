@@ -520,6 +520,8 @@ Guide: https://www.first.org/cvss/user-guide
 ## once all of our scans are completed, and all potential issues have been identified, we can go to (Target>Site map), right-click on our target, and select (Issue>Report issues for this host). We will get prompted to select the export type for the report and what information we would like to include in the report. Once we export the report, we can open it in any web browser to view its details
 
 
+# Information gathering
+
 
 
 
