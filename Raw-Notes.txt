@@ -566,6 +566,180 @@ Mail Exchange (MX) 	The MX record identifies a host that will accept emails for 
 
 ## We can also specify a nameserver if needed by adding @<nameserver/IP> to the command. Unlike nslookup, DIG shows us some more information that can be of importance.
 
+#   #   #   #   Active Infrastructure Identification   #   #   #   #
+
+## If we discover the webserver behind the target application, it can give us a good idea of what operating system is running on the back-end server. For example, if we find out the IIS version running, we can infer the Windows OS version in use by mapping the IIS version back to the Windows version that it comes installed on by default. Some default installations are:
+
+    IIS 6.0: Windows Server 2003
+    IIS 7.0-8.5: Windows Server 2008 / Windows Server 2008R2
+    IIS 10.0 (v1607-v1709): Windows Server 2016
+    IIS 10.0 (v1809-): Windows Server 2019
+
+## Although this is usually correct when dealing with Windows, we can not be sure in the case of Linux or BSD-based distributions as they can run different web server versions in the case of Nginx or Apache. This kind of technology could interfere with or alter our future testing activities. Nevertheless, if we deal with a web server, we will not be able to find any fingerprints about the server in HTML or JS.
+
+# Web Servers
+
+# # Identifying the Web Server version
+
+# # HTTP Headers
+RoseHacks@htb[/htb]$ curl -I "http://${TARGET}"
+
+HTTP/1.1 200 OK
+Date: Thu, 23 Sep 2021 15:10:42 GMT
+Server: Apache/2.4.25 (Debian)
+X-Powered-By: PHP/7.3.5
+Link: <http://192.168.10.10/wp-json/>; rel="https://api.w.org/"
+Content-Type: text/html; charset=UTF-8
+
+## A couple things to note from the header:
+* x-powered-by: This can tell us what the web app is using. such as php, asp.net, JSP, etc
+* Cookies: Each technology by default has its cookies. Some of the default cookie values are:
+
+    .NET: ASPSESSIONID<RANDOM>=<COOKIE_VALUE>
+    PHP: PHPSESSID=<COOKIE_VALUE>
+    JAVA: JSESSION=<COOKIE_VALUE>
+
+## WHatweb is another great tool for analyzing web technologies.
+
+RoseHacks@htb[/htb]$ whatweb -a3 https://www.facebook.com -v
+
+WhatWeb report for https://www.facebook.com
+Status    : 200 OK
+Title     : <None>
+IP        : 31.13.92.36
+Country   : IRELAND, IE
+
+Summary   : Strict-Transport-Security[max-age=15552000; preload], PasswordField[pass], Script[text/javascript], X-XSS-Protection[0], HTML5, X-Frame-Options[DENY], Meta-Refresh-Redirect[/?_fb_noscript=1], UncommonHeaders[x-fb-rlafr,x-content-type-options,x-fb-debug,alt-svc]
+
+Detected Plugins:
+[ HTML5 ]
+	HTML version 5, detected by the doctype declaration
+
+
+[ Meta-Refresh-Redirect ]
+	Meta refresh tag is a deprecated URL element that can be
+	used to optionally wait x seconds before reloading the
+	current page or loading a new page. More info:
+	https://secure.wikimedia.org/wikipedia/en/wiki/Meta_refresh
+
+	String       : /?_fb_noscript=1
+	
+	--snip----
+	
+# Wappalyzer 
+## Similar to whatweb, but in the browser.
+
+# Wafw00f
+
+## WafW00f is a web application firewall (WAF) fingerprinting tool that sends requests and analyses responses to determine if a security solution is in place. We can install it with the following command:
+RoseHacks@htb[/htb]$ sudo apt install wafw00f -y
+## We can use options like -a to check all possible WAFs in place instead of stopping scanning at the first match, read targets from an input file via the -i flag, or proxy the requests using the -p option.
+RoseHacks@htb[/htb]$ wafw00f -v https://www.tesla.com
+
+                   ______
+                  /      \
+                 (  Woof! )
+                  \  ____/                      )
+                  ,,                           ) (_
+             .-. -    _______                 ( |__|
+            ()``; |==|_______)                .)|__|
+            / ('        /|\                  (  |__|
+        (  /  )        / | \                  . |__|
+         \(_)_))      /  |  \                   |__|
+
+                    ~ WAFW00F : v2.1.0 ~
+    The Web Application Firewall Fingerprinting Toolkit
+
+[*] Checking https://www.tesla.com
+[+] The site https://www.tesla.com is behind CacheWall (Varnish) WAF.
+[~] Number of requests: 2
+
+# Aquatone
+
+## Aquatone is a tool for automatic and visual inspection of websites across many hosts and is convenient for quickly gaining an overview of HTTP-based attack surfaces by scanning a list of configurable ports, visiting the website with a headless Chrome browser, and taking and screenshot. This is helpful, especially when dealing with huge subdomain lists. Aquatone is not installed by default in Parrot Linux, so we will need to install via the following commands.
+## Setting up 
+RoseHacks@htb[/htb]$ sudo apt install golang chromium-driver
+RoseHacks@htb[/htb]$ go get github.com/michenriksen/aquatone
+RoseHacks@htb[/htb]$ export PATH="$PATH":"$HOME/go/bin"
+
+RoseHacks@htb[/htb]$ cat facebook_aquatone.txt | aquatone -out ./aquatone -screenshot-timeout 1000
+
+aquatone v1.7.0 started at 2021-10-06T10:14:42+01:00
+
+Targets    : 30
+Threads    : 2
+Ports      : 80, 443, 8000, 8080, 8443
+Output dir : aquatone
+
+edge-star-shv-01-cdg2.facebook.com: port 80 open
+edge-extern-shv-01-waw1.facebook.com: port 80 open
+whatsapp-chatd-edge-shv-01-ams4.facebook.com: port 80 open
+edge-secure-shv-01-ham3.facebook.com: port 80 open
+sv-se.facebook.com: port 80 open
+ko.facebook.com: port 80 open
+whatsapp-chatd-msgr-mini-edge-shv-01-lis1.facebook.com: port 80 open
+synthetic-e2e-elbprod-sli-shv-01-otp1.facebook.com: port 80 open
+edge-star-shv-01-cdg2.facebook.com: port 443 open
+edge-extern-shv-01-waw1.facebook.com: port 443 open
+whatsapp-chatd-edge-shv-01-ams4.facebook.com: port 443 open
+http://edge-star-shv-01-cdg2.facebook.com/: 200 OK
+http://edge-extern-shv-01-waw1.facebook.com/: 200 OK
+edge-secure-shv-01-ham3.facebook.com: port 443 open
+ondemand-edge-shv-01-cph2.facebook.com: port 443 open
+sv-se.facebook.com: port 443 open
+http://edge-secure-shv-01-ham3.facebook.com/: 200 OK
+ko.facebook.com: port 443 open
+whatsapp-chatd-msgr-mini-edge-shv-01-lis1.facebook.com: port 443 open
+http://sv-se.facebook.com/: 200 OK
+http://ko.facebook.com/: 200 OK
+synthetic-e2e-elbprod-sli-shv-01-otp1.facebook.com: port 443 open
+http://synthetic-e2e-elbprod-sli-shv-01-otp1.facebook.com/: 400 default_vip_400
+https://edge-star-shv-01-cdg2.facebook.com/: 200 OK
+https://edge-extern-shv-01-waw1.facebook.com/: 200 OK
+http://edge-star-shv-01-cdg2.facebook.com/: screenshot timed out
+http://edge-extern-shv-01-waw1.facebook.com/: screenshot timed out
+https://edge-secure-shv-01-ham3.facebook.com/: 200 OK
+https://sv-se.facebook.com/: 200 OK
+https://ko.facebook.com/: 200 OK
+http://edge-secure-shv-01-ham3.facebook.com/: screenshot timed out
+http://sv-se.facebook.com/: screenshot timed out
+http://ko.facebook.com/: screenshot timed out
+https://synthetic-e2e-elbprod-sli-shv-01-otp1.facebook.com/: 400 default_vip_400
+http://synthetic-e2e-elbprod-sli-shv-01-otp1.facebook.com/: screenshot successful
+https://edge-star-shv-01-cdg2.facebook.com/: screenshot timed out
+https://edge-extern-shv-01-waw1.facebook.com/: screenshot timed out
+https://edge-secure-shv-01-ham3.facebook.com/: screenshot timed out
+https://sv-se.facebook.com/: screenshot timed out
+https://ko.facebook.com/: screenshot timed out
+https://synthetic-e2e-elbprod-sli-shv-01-otp1.facebook.com/: screenshot successful
+Calculating page structures... done
+Clustering similar pages... done
+Generating HTML report... done
+
+Writing session file...Time:
+ - Started at  : 2021-10-06T10:14:42+01:00
+ - Finished at : 2021-10-06T10:15:01+01:00
+ - Duration    : 19s
+
+Requests:
+ - Successful : 12
+ - Failed     : 5
+
+ - 2xx : 10
+ - 3xx : 0
+ - 4xx : 2
+ - 5xx : 0
+
+Screenshots:
+ - Successful : 2
+ - Failed     : 10
+
+Wrote HTML report to: aquatone/aquatone_report.html
+
+## When it finishes, we will have a file called aquatone_report.html where we can see screenshots, technologies identified, server response headers, and HTML.
+
+# Active Subdomain Enumeration
+
 
 
 
